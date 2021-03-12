@@ -1,24 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
+import Homepage from './Pages/Homepage';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory,
+  withRouter,
+  useLocation
+} from "react-router-dom";
+import { createBrowserHistory } from 'history';
+import Authentication from './Pages/Authentication';
+import UserHome from './Pages/UserComponents/UserHome';
+import PrivateRoute from './Pages/PrivateRoute';
 
 function App() {
+  const history = createBrowserHistory();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router history={history} >
+      <Switch>
+        <Route exact path="/" >
+          <Homepage />
+        </Route>
+        <Route exact path="/authentication"
+          component={withRouter(Authentication)} />
+          <Route exact path="/UserHome"
+          component={withRouter(UserHome)} />
+          <Route >
+            {/* <PrivateRoute exact path="/Home" >
+              <UserHome />
+            </PrivateRoute> */}
+          </Route>
+      </Switch>
+      
+    </Router>
   );
 }
 
